@@ -28,25 +28,20 @@ namespace GildedRose
 
             foreach (var item in this.items)
             {
+                //Aged Brie
                 if (item.Name == "Aged Brie")
                 {
                     item.SellIn--;
                     if (item.SellIn < 0)
                     {
-                        if (item.Quality <= 48)
-                        {
                             item.Quality = item.Quality + 2;
-                        }
                     }
                     else
                     {
-                        if (item.Quality <= 49)
-                        {
                             item.Quality++;
-                        }
-                        
                     }
                 }
+                //Sulfuras
                 else if (item.Name == "Sulfuras, Hand of Ragnaros")
                 {
                     continue;
@@ -60,37 +55,49 @@ namespace GildedRose
                     }
                     else
                     {
-                        
+                        //Backstage passes
                         if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                         {
                             if (item.SellIn > 10)
                             {
                                 item.Quality++;
-                            } 
-                            else if (item.SellIn > 5){
+                            }
+                            else if (item.SellIn > 5)
+                            {
                                 item.Quality = item.Quality + 2;
-                            } 
+                            }
                             else if (item.SellIn > 0)
                             {
                                 item.Quality = item.Quality + 3;
-                            } else
+                            }
+                            else
                             {
                                 item.Quality = 0;
                             }
                         }
+                        //Conjured AND SellIn passed
                         else if (item.Name.ToLower().Contains("conjured") && item.SellIn <= 0)
                         {
                             item.Quality = item.Quality - 4;
                         }
-                        else if(item.Name.ToLower().Contains("conjured") || item.SellIn <= 0)
+                        //Conjured OR SellIn passed
+                        else if (item.Name.ToLower().Contains("conjured") || item.SellIn <= 0)
                         {
                             item.Quality = item.Quality - 2;
                         }
+                        //No special condition
                         else
                         {
                             item.Quality--;
                         }
                     }
+                }
+                //Quality is never higher than 50 or lower than 0 except of Sulfuras
+                if (item.Quality > 50)
+                {
+                    item.Quality = 50;
+                } else if (item.Quality < 0) {
+                    item.Quality = 0;
                 }
             }
         }
